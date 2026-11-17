@@ -88,9 +88,9 @@ The [shareable evaluation figure](reports/evaluation.png) contrasts rolling vali
 - [Interview guide](docs/interview-guide.md)
 - [Validation record](docs/validation.md)
 
-AI assistance was used to implement and document this project. Before presenting it, rerun it, inspect its failures and explain the assumptions in your own words.
+Before presenting it, rerun it, inspect its failures and explain the assumptions in your own words.
 
 
 ## Development
 
-Independent, AI-assisted educational portfolio project. The source, evaluation design and limitations are documented so the work can be inspected and reproduced. GitHub Actions runs the committed browser checks. Python pipeline reproduction uses the commands and data sources described above.
+Independent educational portfolio project. The source, evaluation design and limitations are documented so the work can be inspected and reproduced. GitHub Actions runs the committed browser checks. Python pipeline reproduction uses the commands and data sources described above.
