@@ -1,0 +1,191 @@
+{
+  "selected": "boost",
+  "names": {
+    "weekly": "Weekly repeat",
+    "monthly": "28-day repeat",
+    "mean": "28-day mean",
+    "boost": "Poisson boosting"
+  },
+  "horizon": 28,
+  "origins": [
+    1857,
+    1885
+  ],
+  "testOrigin": 1913,
+  "historyStart": "2011-01-29",
+  "historyEnd": "2016-05-22",
+  "futureStart": "2016-05-23",
+  "futureEnd": "2016-06-19",
+  "testStart": "2016-04-25",
+  "testEnd": "2016-05-22",
+  "coverage": 0.9166666666666666,
+  "bandMethod": "Per-series 90th percentile absolute errors from 56 validation forecasts; higher quantile, clipped lower bound. Empirical error envelope, not guaranteed prediction coverage.",
+  "models": {
+    "weekly": {
+      "label": "Weekly repeat",
+      "validationWape": 0.6736644478579963,
+      "folds": [
+        {
+          "origin": 1857,
+          "wape": 0.7916366258111031,
+          "mae": 6.535714285714286,
+          "bias": 0.08002883922134102,
+          "rmsse": 1.1100252373299886,
+          "rmsseSeries": 12,
+          "absoluteError": 2196.0,
+          "actualUnits": 2774.0
+        },
+        {
+          "origin": 1885,
+          "wape": 0.5675850891410049,
+          "mae": 5.211309523809524,
+          "bias": 0.09562398703403566,
+          "rmsse": 1.0307611267501342,
+          "rmsseSeries": 12,
+          "absoluteError": 1751.0,
+          "actualUnits": 3085.0
+        }
+      ],
+      "test": {
+        "wape": 0.47617689015691866,
+        "mae": 4.967261904761905,
+        "bias": -0.039087018544935806,
+        "rmsse": 1.0661396152132434,
+        "rmsseSeries": 12,
+        "absoluteError": 1669.0,
+        "actualUnits": 3505.0
+      }
+    },
+    "monthly": {
+      "label": "28-day repeat",
+      "validationWape": 0.726915855948114,
+      "folds": [
+        {
+          "origin": 1857,
+          "wape": 0.8082191780821918,
+          "mae": 6.6726190476190474,
+          "bias": 0.2069214131218457,
+          "rmsse": 1.131018333514579,
+          "rmsseSeries": 12,
+          "absoluteError": 2242.0,
+          "actualUnits": 2774.0
+        },
+        {
+          "origin": 1885,
+          "wape": 0.6538087520259319,
+          "mae": 6.002976190476191,
+          "bias": -0.10081037277147488,
+          "rmsse": 1.0816979326575638,
+          "rmsseSeries": 12,
+          "absoluteError": 2017.0,
+          "actualUnits": 3085.0
+        }
+      ],
+      "test": {
+        "wape": 0.5135520684736091,
+        "mae": 5.357142857142857,
+        "bias": -0.11982881597717546,
+        "rmsse": 1.05226395708032,
+        "rmsseSeries": 12,
+        "absoluteError": 1800.0,
+        "actualUnits": 3505.0
+      }
+    },
+    "mean": {
+      "label": "28-day mean",
+      "validationWape": 0.6400531538780386,
+      "folds": [
+        {
+          "origin": 1857,
+          "wape": 0.7095478422082604,
+          "mae": 5.857993197278912,
+          "bias": 0.2069214131218457,
+          "rmsse": 0.8472334062772732,
+          "rmsseSeries": 12,
+          "absoluteError": 1968.2857142857144,
+          "actualUnits": 2774.0
+        },
+        {
+          "origin": 1885,
+          "wape": 0.5775642509840241,
+          "mae": 5.302933673469387,
+          "bias": -0.10081037277147488,
+          "rmsse": 0.8341898961899962,
+          "rmsseSeries": 12,
+          "absoluteError": 1781.7857142857142,
+          "actualUnits": 3085.0
+        }
+      ],
+      "test": {
+        "wape": 0.4106786223761973,
+        "mae": 4.284013605442177,
+        "bias": -0.1198288159771755,
+        "rmsse": 0.8004410711576359,
+        "rmsseSeries": 12,
+        "absoluteError": 1439.4285714285716,
+        "actualUnits": 3505.0
+      }
+    },
+    "boost": {
+      "label": "Poisson boosting",
+      "validationWape": 0.5502006686985399,
+      "folds": [
+        {
+          "origin": 1857,
+          "wape": 0.5941451693555077,
+          "mae": 4.905234225571959,
+          "bias": 0.044343151903114185,
+          "rmsse": 0.8032458444681398,
+          "rmsseSeries": 12,
+          "absoluteError": 1648.1586997921784,
+          "actualUnits": 2774.0
+        },
+        {
+          "origin": 1885,
+          "wape": 0.5106862295340574,
+          "mae": 4.688889934858831,
+          "bias": 0.22841372660504095,
+          "rmsse": 0.8055620773081881,
+          "rmsseSeries": 12,
+          "absoluteError": 1575.467018112567,
+          "actualUnits": 3085.0
+        }
+      ],
+      "test": {
+        "wape": 0.3527117265490747,
+        "mae": 3.679329171293175,
+        "bias": 0.06082018506490875,
+        "rmsse": 0.7887380013127347,
+        "rmsseSeries": 12,
+        "absoluteError": 1236.2546015545067,
+        "actualUnits": 3505.0
+      }
+    }
+  },
+  "features": [
+    "sku",
+    "weekday",
+    "month",
+    "snap_ca",
+    "event",
+    "time",
+    "lag_1",
+    "lag_7",
+    "lag_14",
+    "lag_28",
+    "mean_7",
+    "mean_28",
+    "mean_56",
+    "zero_share_28"
+  ],
+  "versions": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "pandas": "3.0.1",
+    "sklearn": "1.9.1"
+  },
+  "dataHashes": {
+    "calendar.csv": "d12b5914ef03e66649adf5dd9e996e6602251c22b7a6af8f1f7e3aa12f8860f5",
+    "sales_subset.csv": "ee0473a26acf9f99b77c494eb81d283766c0567211d0f5a6cae6ccc153b180c2"
+  }
+}

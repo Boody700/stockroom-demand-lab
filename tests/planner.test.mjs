@@ -1,0 +1,15 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {plan,validateInputs,csv} from '../dist/planner.mjs';
+const input={onHand:30,onOrder:20,backorders:5,lead:3,review:2,buffer:1,stress:100};
+const demand=Array(28).fill(10);
+test('inventory position, protection and rounded order reconcile',()=>{const p=plan(demand,input);assert.equal(p.protection,6);assert.equal(p.target,60);assert.equal(p.position,45);assert.equal(p.order,15);});
+test('orders arrive once at the start of the lead-time day; backlog is carried',()=>{const p=plan(demand,input);assert.deepEqual(p.rows.slice(0,4).map(x=>[x.arrival,x.balance]),[[0,15],[0,5],[35,30],[0,20]]);assert.equal(p.rows.reduce((a,b)=>a+b.arrival,0),35);assert.equal(p.endBalance,25+35-280);});
+test('an order cannot cure an earlier shortage',()=>{const p=plan(demand,{...input,onHand:0,onOrder:0,backorders:0});assert.equal(p.firstShortage,1);assert.equal(p.beforeArrival,true);assert.ok(p.order>0);});
+test('excluding suggested order retains existing pipeline and proposed decision',()=>{const p=plan(demand,input,false);assert.equal(p.order,15);assert.equal(p.rows[2].arrival,20);assert.equal(p.endBalance,25+20-280);});
+test('empty/invalid and fractional operational inputs are rejected',()=>{for(const value of [NaN,Infinity,-1,1.5,100001])assert.ok(validateInputs({...input,onHand:value}).length);assert.throws(()=>plan(demand,{...input,lead:0}));assert.throws(()=>plan([NaN,...demand],input));});
+test('28-day protection bound and stress multiplier are applied once',()=>{const p=plan(demand,{...input,lead:14,review:7,buffer:7,stress:150});assert.equal(p.protection,28);assert.equal(p.target,420);assert.equal(p.totalDemand,420);});
+test('zero demand, excess inventory and exact zero balance do not create an order/shortage',()=>{const p=plan(Array(28).fill(0),{...input,backorders:0});assert.equal(p.order,0);assert.equal(p.firstShortage,null);const q=plan(Array(28).fill(1),{...input,onHand:28,onOrder:0,backorders:0},false);assert.equal(q.firstShortage,null);});
+test('CSV retains quoted fields and actual newlines',()=>assert.equal(csv([['a,b','c"d'],[1,2]]),'"a,b","c""d"\r\n"1","2"\r\n'));
+test('shipped forecasts and every product scenario are finite and reconcile',async()=>{const d=JSON.parse(await readFile(new URL('../dist/data/forecast.json',import.meta.url)));assert.equal(d.series.length,12);for(const s of d.series){assert.equal(s.history.length,1941);assert.equal(s.forecast.length,28);const p=plan(s.forecast,input);assert.ok(p.rows.every(x=>Number.isFinite(x.balance)));assert.ok(Math.abs(p.endBalance-(input.onHand-input.backorders+input.onOrder+p.order-p.totalDemand))<1e-8);}});
