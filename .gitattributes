@@ -1,0 +1,2 @@
+# Preserve source-data bytes so recorded checksums remain reproducible.
+data/** -text
